@@ -1,9 +1,10 @@
 package com.epam.training.webshop.core.cart;
 
+import com.epam.training.webshop.core.checkout.model.Order;
 import com.epam.training.webshop.core.finance.bank.Bank;
 import com.epam.training.webshop.core.finance.bank.model.CurrencyPair;
 import com.epam.training.webshop.core.finance.money.Money;
-import com.epam.training.webshop.core.product.model.Product;
+import com.epam.training.webshop.core.product.model.ProductDto;
 import java.util.Currency;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
@@ -16,9 +17,9 @@ class CartTest {
     private static final Currency USD_CURRENCY = Currency.getInstance("USD");
     private static final CurrencyPair HUF_TO_HUF_CURRENCY_PAIR = new CurrencyPair(HUF_CURRENCY, HUF_CURRENCY);
     private static final CurrencyPair USD_TO_HUF_CURRENCY_PAIR = new CurrencyPair(USD_CURRENCY, HUF_CURRENCY);
-    private static final Product TEST_PRODUCT_MILK = new Product("tej", new Money(500, HUF_CURRENCY));
-    private static final Product TEST_PRODUCT_BREAD = new Product("kenyér", new Money(600, HUF_CURRENCY));
-    private static final Product TEST_PRODUCT_CHOCOLATE = new Product("csoki", new Money(1.5, USD_CURRENCY));
+    private static final ProductDto TEST_PRODUCT_MILK = new ProductDto("tej", new Money(500, HUF_CURRENCY));
+    private static final ProductDto TEST_PRODUCT_BREAD = new ProductDto("kenyér", new Money(600, HUF_CURRENCY));
+    private static final ProductDto TEST_PRODUCT_CHOCOLATE = new ProductDto("csoki", new Money(1.5, USD_CURRENCY));
 
     private final Bank mockBank = Mockito.mock(Bank.class);
 
@@ -113,5 +114,20 @@ class CartTest {
         Assertions.assertEquals(expected, actual);
         Mockito.verify(mockBank, Mockito.times(2)).getExchangeRate(HUF_TO_HUF_CURRENCY_PAIR);
         Mockito.verifyNoMoreInteractions(mockBank);
+    }
+
+    @Test
+    public void testHandleOrderShouldEmptyTheProductListWhenItIsCalled() {
+        // Given
+        Order order = Mockito.mock(Order.class);
+        Cart underTest = Cart.of(mockBank, TEST_PRODUCT_CHOCOLATE);
+        Cart expected = Cart.of(mockBank);
+
+        // When
+        underTest.handleOrder(order);
+
+        // Then
+        Assertions.assertEquals(expected, underTest);
+        Mockito.verifyNoMoreInteractions(mockBank, order);
     }
 }
