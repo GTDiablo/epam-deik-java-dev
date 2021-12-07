@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ticket Service</a> &gt; <a href="index.source.html" class="el_package">com.epam.training.ticketservice.ui.command</a> &gt; <span class="el_source">UserCommand.java</span></div><h1>UserCommand.java</h1><pre class="source lang-java linenums">package com.epam.training.ticketservice.ui.command;
+
+import com.epam.training.ticketservice.core.user.UserService;
+import com.epam.training.ticketservice.core.user.model.UserDto;
+import com.epam.training.ticketservice.core.user.persistence.entity.User;
+import org.springframework.shell.Availability;
+import org.springframework.shell.standard.ShellComponent;
+import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellMethodAvailability;
+
+import java.util.Objects;
+import java.util.Optional;
+
+@ShellComponent
+public class UserCommand {
+    private final UserService userService;
+
+<span class="nc" id="L18">    public UserCommand(UserService userService) {</span>
+<span class="nc" id="L19">        this.userService = userService;</span>
+<span class="nc" id="L20">    }</span>
+
+    @ShellMethod(key = &quot;sign in privileged&quot;, value = &quot;Signing in as an admin.&quot;)
+    public String signInPrivileged(String username, String password) {
+<span class="nc" id="L24">        Optional&lt;UserDto&gt; user = userService.singInPrivileged(username, password);</span>
+<span class="nc bnc" id="L25" title="All 2 branches missed.">        if (user.isEmpty()) {</span>
+<span class="nc" id="L26">            return &quot;Login failed due to incorrect credentials&quot;;</span>
+        }
+<span class="nc" id="L28">        return user.get() + &quot;signed in.&quot;;</span>
+    }
+
+    @ShellMethod(key = &quot;sign out&quot;, value = &quot;Signing out.&quot;)
+    public String signOut() {
+<span class="nc" id="L33">        Optional&lt;UserDto&gt; user = userService.signOut();</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        if (user.isEmpty()) {</span>
+<span class="nc" id="L35">            return &quot;You need to sign in first!&quot;;</span>
+        }
+<span class="nc" id="L37">        return user.get() + &quot; is signed out!&quot;;</span>
+    }
+
+    @ShellMethod(key = &quot;describe account&quot;,
+            value = &quot;You can query the type and state of the currently signed in account.&quot;)
+    public String describeAccount() {
+<span class="nc" id="L43">        Optional&lt;UserDto&gt; user = userService.describeAccount();</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        if (user.isEmpty()) {</span>
+<span class="nc" id="L45">            return &quot;You are not signed in&quot;;</span>
+        }
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        if (Objects.equals(userService.getRole(), User.Role.ADMIN)) {</span>
+<span class="nc" id="L48">            return &quot;Signed in with privileged account&quot; + user.get();</span>
+        } else {
+<span class="nc" id="L50">            return &quot;Signed in with account&quot; + user.get();</span>
+        }
+    }
+
+    @ShellMethod(key = &quot;sign up&quot;, value = &quot;Create a non-admin account&quot;)
+    public String signUp(String userName, String password) {
+        try {
+<span class="nc" id="L57">            userService.signUp(userName, password);</span>
+<span class="nc" id="L58">            return &quot;Signing up was successful!&quot;;</span>
+<span class="nc" id="L59">        } catch (Exception e) {</span>
+<span class="nc" id="L60">            return &quot;Signing up failed!&quot;;</span>
+        }
+    }
+
+    @ShellMethod(key = &quot;sign in&quot;, value = &quot;Sign in as non-admin user&quot;)
+    public String signIn(String userName, String password) {
+<span class="nc" id="L66">        Optional&lt;UserDto&gt; user = userService.signIn(userName, password);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (user.isEmpty()) {</span>
+<span class="nc" id="L68">            return &quot;Login failed due to incorrect credentials&quot;;</span>
+        }
+<span class="nc" id="L70">        return &quot;Signed in as:&quot; + user.get();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

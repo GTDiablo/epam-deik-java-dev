@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="hu"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Screening.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ticket Service</a> &gt; <a href="index.source.html" class="el_package">com.epam.training.ticketservice.core.screening.persistence.entity</a> &gt; <span class="el_source">Screening.java</span></div><h1>Screening.java</h1><pre class="source lang-java linenums">package com.epam.training.ticketservice.core.screening.persistence.entity;
+
+import com.epam.training.ticketservice.core.movie.persistence.entity.Movie;
+import com.epam.training.ticketservice.core.room.persistance.entity.Room;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+@Entity
+public class Screening {
+
+    @Id
+    @GeneratedValue
+    private Integer id;
+    private String movie;
+    private String room;
+    private LocalDateTime date;
+
+<span class="fc" id="L22">    public Screening(String movie, String room, LocalDateTime date) {</span>
+<span class="fc" id="L23">        this.movie = movie;</span>
+<span class="fc" id="L24">        this.room = room;</span>
+<span class="fc" id="L25">        this.date = date;</span>
+<span class="fc" id="L26">    }</span>
+
+<span class="nc" id="L28">    public Screening() {</span>
+<span class="nc" id="L29">    }</span>
+    public String getMovie() {
+<span class="fc" id="L31">        return movie;</span>
+    }
+
+    public void setMovie(String movie) {
+<span class="nc" id="L35">        this.movie = movie;</span>
+<span class="nc" id="L36">    }</span>
+
+    public String getRoom() {
+<span class="fc" id="L39">        return room;</span>
+    }
+
+    public void setRoom(String room) {
+<span class="nc" id="L43">        this.room = room;</span>
+<span class="nc" id="L44">    }</span>
+
+    public LocalDateTime getDate() {
+<span class="fc" id="L47">        return date;</span>
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        if (this == o) {</span>
+<span class="nc" id="L53">            return true;</span>
+        }
+<span class="pc bpc" id="L55" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L56">            return false;</span>
+        }
+<span class="fc" id="L58">        Screening screening = (Screening) o;</span>
+<span class="pc bpc" id="L59" title="2 of 4 branches missed.">        return Objects.equals(id, screening.id) &amp;&amp; Objects.equals(movie, screening.movie)</span>
+<span class="pc bpc" id="L60" title="2 of 4 branches missed.">                &amp;&amp; Objects.equals(room, screening.room) &amp;&amp; Objects.equals(date, screening.date);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L65">        return Objects.hash(id, movie, room, date);</span>
+    }
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

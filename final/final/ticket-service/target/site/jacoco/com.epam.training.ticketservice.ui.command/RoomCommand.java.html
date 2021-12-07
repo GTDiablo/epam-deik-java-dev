@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="hu"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RoomCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ticket Service</a> &gt; <a href="index.source.html" class="el_package">com.epam.training.ticketservice.ui.command</a> &gt; <span class="el_source">RoomCommand.java</span></div><h1>RoomCommand.java</h1><pre class="source lang-java linenums">package com.epam.training.ticketservice.ui.command;
+
+import com.epam.training.ticketservice.core.room.RoomService;
+import com.epam.training.ticketservice.core.room.model.RoomDto;
+import com.epam.training.ticketservice.core.user.UserService;
+import com.epam.training.ticketservice.core.user.model.UserDto;
+import com.epam.training.ticketservice.core.user.persistence.entity.User;
+import org.springframework.shell.Availability;
+import org.springframework.shell.standard.ShellComponent;
+import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellMethodAvailability;
+import java.util.Optional;
+
+@ShellComponent
+public class RoomCommand {
+
+    private final RoomService roomService;
+    private final UserService userService;
+
+    private Availability isAvailable() {
+<span class="nc" id="L21">        Optional&lt;UserDto&gt; user = userService.describeAccount();</span>
+<span class="nc bnc" id="L22" title="All 4 branches missed.">        if (user.isPresent() &amp;&amp; user.get().getRole() == User.Role.ADMIN) {</span>
+<span class="nc" id="L23">            return Availability.available();</span>
+        }
+<span class="nc" id="L25">        return Availability.unavailable(&quot;You are not an admin!&quot;);</span>
+    }
+
+<span class="nc" id="L28">    public RoomCommand(RoomService roomService, UserService userService) {</span>
+<span class="nc" id="L29">        this.roomService = roomService;</span>
+<span class="nc" id="L30">        this.userService = userService;</span>
+<span class="nc" id="L31">    }</span>
+
+    @ShellMethodAvailability(&quot;isAvailable&quot;)
+    @ShellMethod(key = &quot;create room&quot;, value = &quot;Create a room.&quot;)
+    public RoomDto createRoom(String name, Integer rows, Integer columns) {
+<span class="nc" id="L36">        RoomDto room =  RoomDto.builder()</span>
+<span class="nc" id="L37">                .withName(name)</span>
+<span class="nc" id="L38">                .withRows(rows)</span>
+<span class="nc" id="L39">                .withColumns(columns)</span>
+<span class="nc" id="L40">                .build();</span>
+<span class="nc" id="L41">        roomService.createRoom(room);</span>
+<span class="nc" id="L42">        return room;</span>
+    }
+
+    @ShellMethodAvailability(&quot;isAvailable&quot;)
+    @ShellMethod(key = &quot;update room&quot;, value = &quot;Updates an already existing room.&quot;)
+    public void updateRoom(String name, Integer rows, Integer columns) {
+<span class="nc" id="L48">        RoomDto roomDto = new RoomDto(</span>
+                name,
+                rows,
+                columns);
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (roomService.getRoomByName(roomDto.getName()).isEmpty()) {</span>
+<span class="nc" id="L53">            System.out.println(&quot;Room does not exist&quot;);</span>
+        } else {
+<span class="nc" id="L55">            roomService.updateRoom(roomDto);</span>
+        }
+<span class="nc" id="L57">    }</span>
+
+    @ShellMethodAvailability(&quot;isAvailable&quot;)
+    @ShellMethod(key = &quot;delete room&quot;, value = &quot;Deletes a room.&quot;)
+    public void deleteRoom(String name) {
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        if (roomService.getRoomByName(name).isEmpty()) {</span>
+<span class="nc" id="L63">            System.out.println(&quot;Room does not exist&quot;);</span>
+        } else {
+<span class="nc" id="L65">            roomService.deleteRoom(name);</span>
+        }
+<span class="nc" id="L67">    }</span>
+
+    @ShellMethod(key = &quot;list rooms&quot;, value = &quot;List all available rooms.&quot;)
+    public void listRooms() {
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        if (roomService.getRoomList().isEmpty()) {</span>
+<span class="nc" id="L72">            System.out.println(&quot;There are no rooms at the moment&quot;);</span>
+        } else {
+<span class="nc" id="L74">            roomService.getRoomList()</span>
+<span class="nc" id="L75">                    .forEach((m) -&gt;</span>
+<span class="nc" id="L76">                            System.out.println(&quot;Room &quot;</span>
+<span class="nc" id="L77">                                    + m.getName() + &quot; with &quot;</span>
+<span class="nc" id="L78">                                    + m.getColumns() * m.getRows() + &quot; seats, &quot;</span>
+<span class="nc" id="L79">                                    + m.getRows() + &quot; rows and &quot;</span>
+<span class="nc" id="L80">                                    + m.getColumns() + &quot; columns&quot;</span>
+                            ));
+        }
+<span class="nc" id="L83">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

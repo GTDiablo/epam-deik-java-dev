@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScreeningCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ticket Service</a> &gt; <a href="index.source.html" class="el_package">com.epam.training.ticketservice.ui.command</a> &gt; <span class="el_source">ScreeningCommand.java</span></div><h1>ScreeningCommand.java</h1><pre class="source lang-java linenums">package com.epam.training.ticketservice.ui.command;
+
+import com.epam.training.ticketservice.core.movie.MovieService;
+import com.epam.training.ticketservice.core.movie.model.MovieDto;
+import com.epam.training.ticketservice.core.movie.persistence.entity.Movie;
+import com.epam.training.ticketservice.core.room.RoomService;
+import com.epam.training.ticketservice.core.room.model.RoomDto;
+import com.epam.training.ticketservice.core.room.persistance.entity.Room;
+import com.epam.training.ticketservice.core.screening.ScreeningService;
+import com.epam.training.ticketservice.core.screening.model.ScreeningDto;
+import com.epam.training.ticketservice.core.user.UserService;
+import com.epam.training.ticketservice.core.user.model.UserDto;
+import com.epam.training.ticketservice.core.user.persistence.entity.User;
+import org.springframework.format.datetime.DateFormatter;
+import org.springframework.shell.Availability;
+import org.springframework.shell.standard.ShellComponent;
+import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellMethodAvailability;
+
+import javax.xml.crypto.Data;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+@ShellComponent
+public class ScreeningCommand {
+
+    private final UserService userService;
+    private final ScreeningService screeningService;
+    private final MovieService movieService;
+    private final RoomService roomService;
+<span class="nc" id="L34">    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm&quot;);</span>
+
+
+    private Availability isAvailable() {
+<span class="nc" id="L38">        Optional&lt;UserDto&gt; user = userService.describeAccount();</span>
+<span class="nc bnc" id="L39" title="All 4 branches missed.">        if (user.isPresent() &amp;&amp; user.get().getRole() == User.Role.ADMIN) {</span>
+<span class="nc" id="L40">            return Availability.available();</span>
+        }
+<span class="nc" id="L42">        return Availability.unavailable(&quot;You are not an admin!&quot;);</span>
+    }
+
+    public ScreeningCommand(UserService userService,
+                            ScreeningService screeningService,
+                            MovieService movieService,
+<span class="nc" id="L48">                            RoomService roomService) {</span>
+<span class="nc" id="L49">        this.userService = userService;</span>
+<span class="nc" id="L50">        this.screeningService = screeningService;</span>
+<span class="nc" id="L51">        this.movieService = movieService;</span>
+<span class="nc" id="L52">        this.roomService = roomService;</span>
+<span class="nc" id="L53">    }</span>
+
+    //create, delete, list,
+
+    @ShellMethodAvailability(&quot;isAvailable&quot;)
+    @ShellMethod(key = &quot;create screening&quot;, value = &quot;Create a new screening&quot;)
+    public ScreeningDto createScreening(String movie, String room, String dateString) {
+<span class="nc" id="L60">        LocalDateTime date = LocalDateTime.parse(dateString, formatter);</span>
+
+<span class="nc" id="L62">        Optional&lt;MovieDto&gt; movieDto = movieService.getMovieByName(movie);</span>
+<span class="nc" id="L63">        Optional&lt;RoomDto&gt; roomDto = roomService.getRoomByName(room);</span>
+
+<span class="nc bnc" id="L65" title="All 4 branches missed.">        if (movieDto.isEmpty() &amp;&amp; roomDto.isEmpty()) {</span>
+<span class="nc" id="L66">            throw new NullPointerException(&quot;Movie and room do not exist&quot;);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        } else if (movieDto.isEmpty()) {</span>
+<span class="nc" id="L68">            throw new NullPointerException(&quot;Movie does not exist&quot;);</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        } else if (roomDto.isEmpty()) {</span>
+<span class="nc" id="L70">            throw new NullPointerException(&quot;Room does not exist&quot;);</span>
+        }
+
+<span class="nc" id="L73">        ScreeningDto screeningDto = ScreeningDto.builder()</span>
+<span class="nc" id="L74">                .withMovie(movieDto.get())</span>
+<span class="nc" id="L75">                .withRoom(roomDto.get())</span>
+<span class="nc" id="L76">                .withDate(date)</span>
+<span class="nc" id="L77">                .build();</span>
+<span class="nc" id="L78">        screeningService.createScreening(screeningDto);</span>
+<span class="nc" id="L79">        return screeningDto;</span>
+    }
+
+    @ShellMethodAvailability(&quot;isAvailable&quot;)
+    @ShellMethod(key = &quot;delete screening&quot;, value = &quot;Delete az existing screening.&quot;)
+    public String deleteScreening(String movie, String room, String dateString) {
+<span class="nc" id="L85">        LocalDateTime date = LocalDateTime.parse(dateString, formatter);</span>
+
+<span class="nc" id="L87">        screeningService.deleteScreening(movie, room, date);</span>
+
+<span class="nc bnc" id="L89" title="All 4 branches missed.">        if (movieService.getMovieByName(movie).isEmpty() || roomService.getRoomByName(room).isEmpty()) {</span>
+<span class="nc" id="L90">            return &quot;Screening does not exist&quot;;</span>
+        } else {
+<span class="nc" id="L92">            screeningService.deleteScreening(movie, room, date);</span>
+<span class="nc" id="L93">            return movie + &quot; deleted successfully.&quot;;</span>
+        }
+    }
+
+    @ShellMethod(key = &quot;list screenings&quot;, value = &quot;List the screenings&quot;)
+    public void listScreenings() {
+<span class="nc" id="L99">        List&lt;ScreeningDto&gt; screeningList = screeningService.getScreeningList();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        if (screeningList.isEmpty()) {</span>
+<span class="nc" id="L101">            System.out.println(&quot;There are no screenings&quot;);</span>
+        } else {
+<span class="nc" id="L103">            screeningList.forEach(System.out::println);</span>
+        }
+<span class="nc" id="L105">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

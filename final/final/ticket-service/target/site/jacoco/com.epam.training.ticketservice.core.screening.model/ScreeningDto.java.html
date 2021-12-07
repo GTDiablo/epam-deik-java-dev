@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="hu"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScreeningDto.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ticket Service</a> &gt; <a href="index.source.html" class="el_package">com.epam.training.ticketservice.core.screening.model</a> &gt; <span class="el_source">ScreeningDto.java</span></div><h1>ScreeningDto.java</h1><pre class="source lang-java linenums">package com.epam.training.ticketservice.core.screening.model;
+
+import com.epam.training.ticketservice.core.movie.model.MovieDto;
+import com.epam.training.ticketservice.core.room.model.RoomDto;
+import com.epam.training.ticketservice.core.room.persistance.entity.Room;
+import net.bytebuddy.asm.Advice;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
+
+public class ScreeningDto {
+
+    private final MovieDto movie;
+    private final RoomDto room;
+    private final LocalDateTime date;
+
+<span class="fc" id="L18">    public ScreeningDto(MovieDto movie, RoomDto room, LocalDateTime date) {</span>
+<span class="fc" id="L19">        this.movie = movie;</span>
+<span class="fc" id="L20">        this.room = room;</span>
+<span class="fc" id="L21">        this.date = date;</span>
+<span class="fc" id="L22">    }</span>
+
+    public static Builder builder() {
+<span class="fc" id="L25">        return new Builder();</span>
+    }
+
+    public MovieDto getMovie() {
+<span class="fc" id="L29">        return movie;</span>
+    }
+
+    public RoomDto getRoom() {
+<span class="fc" id="L33">        return room;</span>
+    }
+
+    public LocalDateTime getDate() {
+<span class="fc" id="L37">        return date;</span>
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if (this == o) {</span>
+<span class="nc" id="L43">            return true;</span>
+        }
+<span class="pc bpc" id="L45" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L46">            return false;</span>
+        }
+<span class="fc" id="L48">        ScreeningDto that = (ScreeningDto) o;</span>
+<span class="pc bpc" id="L49" title="3 of 6 branches missed.">        return Objects.equals(movie, that.movie) &amp;&amp; Objects.equals(room, that.room) &amp;&amp; Objects.equals(date, that.date);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L54">        return Objects.hash(movie, room, date);</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L59">        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm&quot;);</span>
+<span class="nc" id="L60">        String screeningStartDateString = date.format(formatter);</span>
+<span class="nc" id="L61">        return movie.toString() + &quot;, screened in room &quot; + room.getName() + &quot;, at &quot; + screeningStartDateString;</span>
+    }
+
+<span class="fc" id="L64">    public static class Builder {</span>
+        private MovieDto movie;
+        private RoomDto room;
+        private LocalDateTime date;
+
+        public ScreeningDto.Builder withMovie(MovieDto movie) {
+<span class="fc" id="L70">            this.movie = movie;</span>
+<span class="fc" id="L71">            return this;</span>
+        }
+
+        public ScreeningDto.Builder withRoom(RoomDto room) {
+<span class="fc" id="L75">            this.room = room;</span>
+<span class="fc" id="L76">            return this;</span>
+        }
+
+        public ScreeningDto.Builder withDate(LocalDateTime date) {
+<span class="fc" id="L80">            this.date = date;</span>
+<span class="fc" id="L81">            return this;</span>
+        }
+
+        public ScreeningDto build() {
+<span class="fc" id="L85">            return new ScreeningDto(movie, room, date);</span>
+        }
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

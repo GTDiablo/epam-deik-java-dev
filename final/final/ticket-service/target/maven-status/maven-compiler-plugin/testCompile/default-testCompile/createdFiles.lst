@@ -1,0 +1,11 @@
+com\epam\training\ticketservice\core\screening\persistence\entity\ScreeningTest.class
+com\epam\training\ticketservice\ui\command\MovieCommandTest.class
+com\epam\training\ticketservice\core\user\impl\UserServiceImplTest.class
+com\epam\training\ticketservice\core\movie\persistence\entity\MovieTest.class
+com\epam\training\ticketservice\core\room\impl\RoomServiceImplTest.class
+com\epam\training\ticketservice\core\movie\impl\MovieServiceImplTest.class
+com\epam\training\ticketservice\core\room\persistance\entity\RoomTest.class
+com\epam\training\ticketservice\core\user\model\UserDtoTest.class
+com\epam\training\ticketservice\core\user\persistence\entity\UserTest.class
+com\epam\training\ticketservice\core\configuration\InMemoryDatabaseInitializerTest.class
+com\epam\training\ticketservice\core\screening\impl\ScreeningServiceImplTest.class
