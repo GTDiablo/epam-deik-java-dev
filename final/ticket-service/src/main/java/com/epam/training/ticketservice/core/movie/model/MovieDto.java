@@ -51,7 +51,7 @@ public class MovieDto {
 
     @Override
     public String toString() {
-        return name + "(" + genre + "," + length + " minutes)";
+        return name + " (" + genre + ", " + length + " minutes)";
     }
 
     public static class Builder {

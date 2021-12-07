@@ -14,12 +14,12 @@ import static org.mockito.Mockito.*;
 
 class RoomServiceImplTest {
 
-    private static final Room PEDERSOLI_ENTITY = new Room("Pedersoli", 10, 10);
+    private static final Room PEDERSOLI_ENTITY = new Room("Pedersoli", 20, 10);
     private static final Room LUMIERE_ENTITY = new Room("Lumiere", 5, 7);
 
     private static final RoomDto PEDERSOLI_DTO = RoomDto.builder()
             .withName("Pedersoli")
-            .withRows(10)
+            .withRows(20)
             .withColumns(10)
             .build();
 

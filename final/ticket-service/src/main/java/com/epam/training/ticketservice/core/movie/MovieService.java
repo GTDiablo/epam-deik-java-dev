@@ -17,4 +17,5 @@ public interface MovieService {
     void deleteMovie(String movieDto);
 
     Integer getMovieID(String title);
+
 }

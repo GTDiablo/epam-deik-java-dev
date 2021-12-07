@@ -44,8 +44,16 @@ public class MovieCommand {
     }
 
     @ShellMethod(key = "list movies", value = "List all available movies")
-    public List<MovieDto> listAvailableMovies() {
-        return movieService.getMovieList();
+    public String listMovies() {
+        List<MovieDto> movies = movieService.getMovieList();
+        if (movies.size() == 0) {
+            return "There are no movies at the moment";
+        }
+        StringBuilder buffer = new StringBuilder();
+        for (MovieDto movie : movies) {
+            buffer.append(movie).append("\n");
+        }
+        return buffer.deleteCharAt(buffer.length() - 1).toString();
     }
 
     @ShellMethodAvailability("isAvailable")

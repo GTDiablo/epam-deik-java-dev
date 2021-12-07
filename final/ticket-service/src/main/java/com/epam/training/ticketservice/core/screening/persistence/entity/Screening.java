@@ -27,6 +27,7 @@ public class Screening {
 
     public Screening() {
     }
+
     public String getMovie() {
         return movie;
     }

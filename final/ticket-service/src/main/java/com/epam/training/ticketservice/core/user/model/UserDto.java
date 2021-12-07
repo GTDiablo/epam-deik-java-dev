@@ -40,7 +40,7 @@ public class UserDto {
 
     @Override
     public String toString() {
-        return "UserDto{" + "username='" + username + '\'' + ", role=" + role + '}';
+        return  " '" + username + "'";
     }
 }
 

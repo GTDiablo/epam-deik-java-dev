@@ -44,7 +44,19 @@ class UserServiceImplTest {
         verify(userRepository).findByUsernameAndPassword("user", "user");
     }
 
+    @Test
+    public void testSignInShouldReturnOptionalEmptyWhenUsernameOrPasswordAreNotCorrect() {
+        // Given
+        Optional<UserDto> expected = Optional.empty();
+        when(userRepository.findByUsernameAndPassword("dummy", "dummy")).thenReturn(Optional.empty());
 
+        // When
+        Optional<UserDto> actual = underTest.signIn("dummy", "dummy");
+
+        // Then
+        assertEquals(expected, actual);
+        verify(userRepository).findByUsernameAndPassword("dummy", "dummy");
+    }
     @Test
     public void testSignOutShouldReturnOptionalEmptyWhenThereIsNoOneLoggedIn() {
         // Given
@@ -133,6 +145,20 @@ class UserServiceImplTest {
         assertEquals(expected.get().getRole(), actual.get().getRole());
         verify(userRepository).findByUsernameAndPassword("admin", "admin");
 
+    }
+
+    @Test
+    public void testSignInPrivilegedShouldReturnOptionalEmptyWhenUsernameOrPasswordAreNotCorrect() {
+        // Given
+        Optional<UserDto> expected = Optional.empty();
+        when(userRepository.findByUsernameAndPassword("admin", "admin")).thenReturn(Optional.empty());
+
+        // When
+        Optional<UserDto> actual = underTest.singInPrivileged("admin", "admin");
+
+        // Then
+        assertEquals(expected, actual);
+        verify(userRepository).findByUsernameAndPassword("admin", "admin");
     }
 
     @Test

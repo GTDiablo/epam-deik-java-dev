@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class ScreeningTest<date> {
+class ScreeningTest {
     private String movie;
     private String room;
 
@@ -24,6 +24,13 @@ class ScreeningTest<date> {
     public void setUp() throws ParseException {
         movie = "Spirited Away";
         room = "asd";
+    }
+
+    @Test
+    public void testConstructor() {
+        Screening underTest = new Screening(movie,room,LocalDateTime.of(2020, Month.JANUARY, 18,21,00));
+        assertNotNull(underTest);
+
     }
 
     @Test

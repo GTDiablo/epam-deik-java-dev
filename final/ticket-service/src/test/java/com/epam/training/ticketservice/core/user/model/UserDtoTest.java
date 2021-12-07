@@ -33,7 +33,7 @@ class UserDtoTest {
     @Test
     void testToStringShouldReturnGivenString() {
         //Given
-        String expected = "UserDto{" + "username='" + underTest.getUsername() + '\'' + ", role=" + underTest.getRole() + '}';
+        String expected = " '" + underTest.getUsername() + "'";
 
         //When
         String actual = underTest.toString();

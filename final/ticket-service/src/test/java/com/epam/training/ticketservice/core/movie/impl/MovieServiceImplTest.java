@@ -31,6 +31,7 @@ class MovieServiceImplTest {
     private final MovieRepository movieRepository = mock(MovieRepository.class);
     private final MovieService underTest = new MovieServiceImpl(movieRepository);
 
+
     @Test
     void testGetMovieListShouldCallMovieRepositoryAndReturnListofMovies() {
         // Given

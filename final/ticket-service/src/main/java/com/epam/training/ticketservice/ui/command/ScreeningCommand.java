@@ -7,6 +7,8 @@ import com.epam.training.ticketservice.core.room.RoomService;
 import com.epam.training.ticketservice.core.room.model.RoomDto;
 import com.epam.training.ticketservice.core.room.persistance.entity.Room;
 import com.epam.training.ticketservice.core.screening.ScreeningService;
+import com.epam.training.ticketservice.core.screening.exception.OccupiedRoomException;
+import com.epam.training.ticketservice.core.screening.exception.ScreeningBreakException;
 import com.epam.training.ticketservice.core.screening.model.ScreeningDto;
 import com.epam.training.ticketservice.core.user.UserService;
 import com.epam.training.ticketservice.core.user.model.UserDto;
@@ -56,27 +58,22 @@ public class ScreeningCommand {
 
     @ShellMethodAvailability("isAvailable")
     @ShellMethod(key = "create screening", value = "Create a new screening")
-    public ScreeningDto createScreening(String movie, String room, String dateString) {
-        LocalDateTime date = LocalDateTime.parse(dateString, formatter);
-
-        Optional<MovieDto> movieDto = movieService.getMovieByName(movie);
-        Optional<RoomDto> roomDto = roomService.getRoomByName(room);
-
-        if (movieDto.isEmpty() && roomDto.isEmpty()) {
-            throw new NullPointerException("Movie and room do not exist");
-        } else if (movieDto.isEmpty()) {
-            throw new NullPointerException("Movie does not exist");
-        } else if (roomDto.isEmpty()) {
-            throw new NullPointerException("Room does not exist");
+    public String createScreening(String title, String roomName, String screeningStartDateString)
+            throws OccupiedRoomException, ScreeningBreakException {
+        LocalDateTime screeningStartDate = LocalDateTime.parse(screeningStartDateString, formatter);
+        try {
+            Optional<MovieDto> movieDto = movieService.getMovieByName(title);
+            Optional<RoomDto> roomDto = roomService.getRoomByName(roomName);
+            ScreeningDto screeningDto = ScreeningDto.builder()
+                    .withMovie(movieDto.get())
+                    .withRoom(roomDto.get())
+                    .withDate(screeningStartDate)
+                    .build();
+            screeningService.createScreening(screeningDto);
+            return screeningDto + " is added to database.";
+        } catch (ScreeningBreakException | OccupiedRoomException e) {
+            return e.getMessage();
         }
-
-        ScreeningDto screeningDto = ScreeningDto.builder()
-                .withMovie(movieDto.get())
-                .withRoom(roomDto.get())
-                .withDate(date)
-                .build();
-        screeningService.createScreening(screeningDto);
-        return screeningDto;
     }
 
     @ShellMethodAvailability("isAvailable")

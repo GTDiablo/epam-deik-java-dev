@@ -25,7 +25,9 @@ public class ScreeningServiceImpl  implements ScreeningService {
     private final ScreeningRepository screeningRepository;
     private final MovieService movieService;
     private final RoomService roomService;
-
+    private static final String BREAK_TIME_CONFLICT =
+            "This would start in the break period after another screening in this room";
+    private static final String OVERLAPPING_TIME = "There is an overlapping screening";
     public ScreeningServiceImpl(ScreeningRepository screeningRepository,
                                 MovieService movieService,
                                 RoomService roomService) {
@@ -35,7 +37,7 @@ public class ScreeningServiceImpl  implements ScreeningService {
     }
 
     @Override
-    public void createScreening(ScreeningDto screeningDto) {
+    public void createScreening(ScreeningDto screeningDto) throws ScreeningBreakException, OccupiedRoomException {
         Objects.requireNonNull(screeningDto, "Screening cannot be null");
         Objects.requireNonNull(screeningDto.getDate(), "Screening start date cannot be null");
 
@@ -50,12 +52,11 @@ public class ScreeningServiceImpl  implements ScreeningService {
             if (newScreeningStart.isAfter(storedScreeningStart.minusMinutes(newScreeningLength + 10))
                     && (newScreeningStart.isBefore(storedScreeningStart.plusMinutes(storedScreeningLength))
                     || newScreeningStart.isEqual(storedScreeningStart.plusMinutes(storedScreeningLength)))) {
-                throw new OccupiedRoomException("There is an overlapping screening");
+                throw new OccupiedRoomException(OVERLAPPING_TIME);
             } else if (newScreeningStart.isAfter(storedScreeningStart.plusMinutes(storedScreeningLength))
                     && newScreeningStart.isBefore(storedScreeningStart.plusMinutes(storedScreeningLength + 10))
                     || newScreeningStart.isEqual(storedScreeningStart.plusMinutes(storedScreeningLength + 10))) {
-                throw new ScreeningBreakException(
-                        "This would start in the break period after another screening in this room");
+                throw new ScreeningBreakException(BREAK_TIME_CONFLICT);
             }
         }
 

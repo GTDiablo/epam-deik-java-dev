@@ -1,5 +1,6 @@
 package com.epam.training.ticketservice.core.movie.persistence.entity;
 
+import com.epam.training.ticketservice.core.room.persistance.entity.Room;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,13 @@ class MovieTest {
     @BeforeEach
     public void init() {
         underTest = new Movie(name,drama, length);
+    }
+
+
+    @Test
+    public void testConstructor() {
+        Movie underTest = new Movie("Sátántangó", "drama", 450);
+        assertNotNull(underTest);
     }
 
     @Test
