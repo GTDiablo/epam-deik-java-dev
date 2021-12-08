@@ -1,0 +1,7 @@
+#surefire_0
+#Wed Dec 08 16:22:40 CET 2021
+basedir=D\:\\epam-deik-java-dev\\final\\ticket-service-acceptance-tests
+idea.version=2021.2.3
+cucumber.filter.tags=@grade2-requirement
+user.dir=D\:\\epam-deik-java-dev\\final\\ticket-service-acceptance-tests
+localRepository=C\:\\Users\\pcs3n\\.m2\\repository

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Screening.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ticket Service</a> &gt; <a href="index.source.html" class="el_package">com.epam.training.ticketservice.core.screening.persistence.entity</a> &gt; <span class="el_source">Screening.java</span></div><h1>Screening.java</h1><pre class="source lang-java linenums">package com.epam.training.ticketservice.core.screening.persistence.entity;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="hu"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Screening.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ticket-service</a> &gt; <a href="index.source.html" class="el_package">com.epam.training.ticketservice.core.screening.persistence.entity</a> &gt; <span class="el_source">Screening.java</span></div><h1>Screening.java</h1><pre class="source lang-java linenums">package com.epam.training.ticketservice.core.screening.persistence.entity;
 
 import com.epam.training.ticketservice.core.movie.persistence.entity.Movie;
 import com.epam.training.ticketservice.core.room.persistance.entity.Room;
@@ -27,42 +27,43 @@ public class Screening {
 
 <span class="nc" id="L28">    public Screening() {</span>
 <span class="nc" id="L29">    }</span>
+
     public String getMovie() {
-<span class="fc" id="L31">        return movie;</span>
+<span class="fc" id="L32">        return movie;</span>
     }
 
     public void setMovie(String movie) {
-<span class="nc" id="L35">        this.movie = movie;</span>
-<span class="nc" id="L36">    }</span>
+<span class="nc" id="L36">        this.movie = movie;</span>
+<span class="nc" id="L37">    }</span>
 
     public String getRoom() {
-<span class="fc" id="L39">        return room;</span>
+<span class="fc" id="L40">        return room;</span>
     }
 
     public void setRoom(String room) {
-<span class="nc" id="L43">        this.room = room;</span>
-<span class="nc" id="L44">    }</span>
+<span class="nc" id="L44">        this.room = room;</span>
+<span class="nc" id="L45">    }</span>
 
     public LocalDateTime getDate() {
-<span class="fc" id="L47">        return date;</span>
+<span class="fc" id="L48">        return date;</span>
     }
 
     @Override
     public boolean equals(Object o) {
-<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        if (this == o) {</span>
-<span class="nc" id="L53">            return true;</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (this == o) {</span>
+<span class="nc" id="L54">            return true;</span>
         }
-<span class="pc bpc" id="L55" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) {</span>
-<span class="nc" id="L56">            return false;</span>
+<span class="pc bpc" id="L56" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L57">            return false;</span>
         }
-<span class="fc" id="L58">        Screening screening = (Screening) o;</span>
-<span class="pc bpc" id="L59" title="2 of 4 branches missed.">        return Objects.equals(id, screening.id) &amp;&amp; Objects.equals(movie, screening.movie)</span>
-<span class="pc bpc" id="L60" title="2 of 4 branches missed.">                &amp;&amp; Objects.equals(room, screening.room) &amp;&amp; Objects.equals(date, screening.date);</span>
+<span class="fc" id="L59">        Screening screening = (Screening) o;</span>
+<span class="pc bpc" id="L60" title="2 of 4 branches missed.">        return Objects.equals(id, screening.id) &amp;&amp; Objects.equals(movie, screening.movie)</span>
+<span class="pc bpc" id="L61" title="2 of 4 branches missed.">                &amp;&amp; Objects.equals(room, screening.room) &amp;&amp; Objects.equals(date, screening.date);</span>
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L65">        return Objects.hash(id, movie, room, date);</span>
+<span class="nc" id="L66">        return Objects.hash(id, movie, room, date);</span>
     }
 
 }

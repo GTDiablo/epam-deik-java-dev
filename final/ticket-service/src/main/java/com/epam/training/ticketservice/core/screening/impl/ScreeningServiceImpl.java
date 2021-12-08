@@ -28,6 +28,7 @@ public class ScreeningServiceImpl  implements ScreeningService {
     private static final String BREAK_TIME_CONFLICT =
             "This would start in the break period after another screening in this room";
     private static final String OVERLAPPING_TIME = "There is an overlapping screening";
+
     public ScreeningServiceImpl(ScreeningRepository screeningRepository,
                                 MovieService movieService,
                                 RoomService roomService) {
